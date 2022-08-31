@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 WAYBAR_WEATHER_JSON_TEXT=$(curl 'wttr.in/?m&format=%t')
 if [[ $WAYBAR_WEATHER_JSON_TEXT == Unknown* ]] ; then
 	WAYBAR_WEATHER_JSON_TEXT="$(ansiweather -l 'White River Junction' -a false -w false -i false -h false -p false -s false -d false | sed -e 's/[ \t]*Weather.*://g'| tr -d '[:space:]')"
