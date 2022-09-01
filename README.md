@@ -36,7 +36,7 @@ Usable by adding the following to the Waybar config (e.g. `~/.config/waybar/conf
 
 Additionally, custom weather styles can be included in e.g. `~/.config/waybar/style.css`:
 
-```json
+```css
 #custom-weather {
     background-color: #000000;
     margin: 0 4px;
