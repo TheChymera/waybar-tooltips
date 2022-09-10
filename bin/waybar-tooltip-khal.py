@@ -81,7 +81,7 @@ locale.setlocale(locale.LC_TIME, "de_CH.utf8")
 mytime = datetime.datetime.now().strftime("%H:%M")
 mydate = datetime.datetime.now().strftime("%Y-%m-%d %a")
 if today in output:
-    data['text'] = f"{mydate}  {mytime}"
+    data['text'] = f"{mydate}  {mytime}"
 else:
     data['text'] = f"{mydate}  {mytime}"
 
