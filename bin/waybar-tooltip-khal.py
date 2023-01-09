@@ -34,15 +34,23 @@ cal_lines = []
 lines = cal_output.split("\n")
 month_counter = 0
 for line in lines:
-    clean_line = escape(line).split("     ")[0]
-    if len(clean_line) == 0:
-        continue
+    if month_counter >= 4:
+        break
+    if line[:3] in months:
+        month_counter += 1
+        clean_line = escape(line).split("     ")[0]
+    else:
+        try:
+            clean_line = re.match("^[ \t]+(?P<days>.*?)   .*?", line).groupdict()["days"]
+        except AttributeError:
+            continue
+        else:
+            if clean_line[1] == " ":
+                clean_line = "     " + clean_line
+            else:
+                clean_line = "    " + clean_line
     if 'Mo Tu We' in clean_line:
         clean_line = "\n<b>"+clean_line+"</b>"
-    if clean_line[:3] in months:
-        month_counter += 1
-    if month_counter >= 4:
-        continue
     cal_lines.append(clean_line)
 
 new_lines = []
