@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if ps aux | grep wf-recorder | grep -v grep > /dev/null; then
+  echo "⬤"
+fi
