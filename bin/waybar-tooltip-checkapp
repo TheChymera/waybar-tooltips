@@ -1,5 +1,36 @@
-#!/usr/bin/env bash
 
-if ps aux | grep wf-recorder | grep -v grep > /dev/null; then
-  echo "⬤"
+# Read Options:
+while getopts ":i:h" flag
+do
+	case "$flag" in
+		i)
+			RETURNICON="$OPTARG"
+			;;
+		h)
+			echo -e "$USAGE"
+			exit 0
+			;;
+		\?)
+			echo "Invalid option: -$OPTARG" >&2
+			exit 1
+			;;
+		:)
+			echo "Option -$OPTARG requires an argument." >&2
+			exit 1
+			;;
+	esac
+done
+
+# shifts pointer to read mandatory duration specification
+shift $((OPTIND - 1))
+APPNAME="${1}"
+
+# Set default options
+if [ -z "$RETURNICON" ]; then
+	RETURNICON="${DEFAULT_RETURNICON}"
 fi
+
+if ps aux | grep "${APPNAME}" | grep -v grep | grep -v waybar > /dev/null; then
+	echo "${RETURNICON}"
+fi
+
