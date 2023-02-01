@@ -45,7 +45,9 @@ for line in lines:
         except AttributeError:
             continue
         else:
-            if clean_line[1] == " ":
+            if len(clean_line) == 0:
+                clean_line=""
+            elif clean_line[1] == " ":
                 clean_line = "     " + clean_line
             else:
                 clean_line = "    " + clean_line
