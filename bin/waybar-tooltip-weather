@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
-MY_CITY="White River Junction,US"
+
+# Set MY_CITY in .bashrc or similar to override geolocation
 
 ERROR_PREFIXES=(
+  "ERROR"
   "Sorry, "
   "Unknown"
 )
 
-WAYBAR_WEATHER_JSON_TEXT=$(curl 'wttr.in/?m&format=%t')
+WAYBAR_WEATHER_JSON_TEXT=$(curl "wttr.in/${MY_CITY}?m&format=%t")
 
 for ERROR_PREFIX in "${ERROR_PREFIXES[@]}"; do
 	if [[ "$WAYBAR_WEATHER_JSON_TEXT" == *"$ERROR_PREFIX"* ]]; then
-		WAYBAR_WEATHER_JSON_TEXT="$(ansiweather -l 'White River Junction' -a false -w false -i false -h false -p false -s false -d false | sed -e 's/[ \t]*Weather.*://g'| tr -d '[:space:]')"
+		WAYBAR_WEATHER_JSON_TEXT="$(ansiweather -l "${MY_CITY}" -a false -w false -i false -h false -p false -s false -d false | sed -e 's/[ \t]*Weather.*://g'| tr -d '[:space:]')"
 		WAYBAR_WEATHER_JSON_TOOLTIP=""
 		WAYBAR_WEATHER_JSON_CLASS=""
 		WAYBAR_WEATHER_JSON_ICON=""
@@ -21,9 +23,9 @@ for ERROR_PREFIX in "${ERROR_PREFIXES[@]}"; do
 done
 
 if [[ -z ${WAYBAR_WEATHER_DONE} ]]; then
-	WAYBAR_WEATHER_JSON_TOOLTIP=$(curl 'wttr.in/?m&format=%t+%C+%c')
-	WAYBAR_WEATHER_JSON_CLASS=$(curl 'wttr.in/?m&format=%C')
-	WAYBAR_WEATHER_JSON_ICON=$(curl 'wttr.in/?m&format=%c')
+	WAYBAR_WEATHER_JSON_TOOLTIP=$(curl "wttr.in/${MY_CITY}?m&format=%t+%C+%c")
+	WAYBAR_WEATHER_JSON_CLASS=$(curl "wttr.in/${MY_CITY}?m&format=%C")
+	WAYBAR_WEATHER_JSON_ICON=$(curl "wttr.in/${MY_CITY}?m&format=%c")
 
 	# Strip strings:
 	WAYBAR_WEATHER_JSON_CLASS=$(sed -e 's/ //'<<<"$WAYBAR_WEATHER_JSON_CLASS")
